@@ -63,8 +63,6 @@ router.post('/webhook', (req, res, next) => {
   }
 
   let intentMap = new Map();
-  intentMap.set('Default Welcome Intent', welcome);
-  intentMap.set('Default Fallback Intent', fallback);
   intentMap.set('Find Phone', findPhone);
   intentMap.set('Create Event', createEvent);
   agent.handleRequest(intentMap);
