@@ -34,7 +34,8 @@ router.post('/webhook', (req, res, next) => {
     return axios.get(iftttURL)
       .then(function (response) {
         const { res, data } = response;
-        console.log(`${res.statusMessage} : ${res.statusCode} : ${data}`);
+        console.log(`\n${res}`);
+        console.log(`${data}\n`);
         return agent.add(`Hold on finding phone now`);
       })
       .catch(function (error) {
