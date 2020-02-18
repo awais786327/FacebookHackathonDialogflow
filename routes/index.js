@@ -7,10 +7,7 @@ const router = express.Router();
 // const localStorage = require('local-storage');
 const {WebhookClient} = require('dialogflow-fulfillment');
 
-const iftttEvent = 'call_phone';
-const iftttBaseUrl = `https://maker.ifttt.com/trigger/${iftttEvent}/with/key/`;
 const iftttKey = 'd4cxtJXjAKGJdNvr4Gpz2WiWfFIX-3AHUOtS10bGKPs';
-const iftttURL = iftttBaseUrl + iftttKey;
 
 router.get('/', (req, res, next) => {
   res.send(`Server is up and running.`);
@@ -23,16 +20,32 @@ router.post('/webhook', (req, res, next) => {
 
   const agent = new WebhookClient({request: req, response: res});
 
-  function welcome(agent) {
-    agent.add(`Welcome to my agent!`);
+  function getUrl(type) {
+    const iftttEvents = {
+      findPhone: 'call_phone',
+      createEvent: 'google_calendar'
+    };
+    return `https://maker.ifttt.com/trigger/${iftttEvents[type]}/with/key/${iftttKey}`;
   }
 
-  function fallback(agent) {
-    agent.add(`I didn't understand`);
+  function createEvent(agent) {
+    return axios.get(getUrl('createEvent'))
+      .then(function (response) {
+        const { data } = response;
+        console.log(`\n`);
+        console.log(data);
+        console.log(`\n`);
+        agent.add(`Hold on, adding it your calendar..`);
+        return agent.add(`done`);
+      })
+      .catch(function (error) {
+        console.log(error);
+        return agent.add(`I'm sorry, can you try again?`);
+      });
   }
 
   function findPhone(agent) {
-    return axios.get(iftttURL)
+    return axios.get(getUrl('findPhone'))
       .then(function (response) {
         const { data } = response;
         console.log(`\n`);
@@ -50,6 +63,7 @@ router.post('/webhook', (req, res, next) => {
   intentMap.set('Default Welcome Intent', welcome);
   intentMap.set('Default Fallback Intent', fallback);
   intentMap.set('Find Phone', findPhone);
+  intentMap.set('Create Event', createEvent);
   agent.handleRequest(intentMap);
 
 });
