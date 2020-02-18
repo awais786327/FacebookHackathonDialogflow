@@ -37,8 +37,7 @@ router.post('/webhook', (req, res, next) => {
         console.log(`\n`);
         console.log(data);
         console.log(`\n`);
-        agent.add(`Hold on, adding it your calendar..`);
-        return agent.add(`done`);
+        return agent.add(`Hold on, adding it your calendar.. done`);
       })
       .catch(function (error) {
         console.log(error);
