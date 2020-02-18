@@ -76,7 +76,7 @@ router.post('/webhook', (req, res, next) => {
     return messages[Math.floor(Math.random() * messages.length)];
   }
 
-  function Reminder(agent) {
+  function reminder(agent) {
     const url = getUrl('reminder');
     return axios.get(url)
       .then(function (response) {
@@ -97,7 +97,7 @@ router.post('/webhook', (req, res, next) => {
   let intentMap = new Map();
   intentMap.set('Find Phone', findPhone);
   intentMap.set('Create Event', createEvent);
-  intentMap.set('Reminder', Reminder);
+  intentMap.set('Reminder', reminder);
   agent.handleRequest(intentMap);
 
 });
