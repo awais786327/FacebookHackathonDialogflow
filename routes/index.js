@@ -71,7 +71,7 @@ router.post('/webhook', (req, res, next) => {
     const messages = [
       `No problem i'll remind`,
       `Don't worry i'll give a reminder`,
-      `alright i'll do it`,
+      `Alright i'll do it`,
     ];
     return messages[Math.floor(Math.random() * messages.length)];
   }
