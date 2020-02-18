@@ -79,11 +79,11 @@ router.post('/webhook', (req, res, next) => {
   function reminder(agent) {
     const time = agent.parameters.time;
 
-    const reminderTime = new Date(time).getTime();
+    const actualTime = new Date(time).getTime();
     const now = new Date().getTime();
-    const actualTime = reminderTime - now;
+    const reminderTime = actualTime - now;
 
-    if (reminderTime < now) {
+    if (actualTime < now) {
       return  agent.add(`You can't make a reminder in the past. Please try again!`);
     }
 
@@ -92,8 +92,8 @@ router.post('/webhook', (req, res, next) => {
       .then(function (response) {
         const { data } = response;
         setTimeout(() => {
-          console.log('TIMEOUT :: ', actualTime);
-        });
+          console.log('TIMEOUT :: ', reminderTime);
+        }, reminderTime);
         console.log(`\n`);
         console.log(url);
         console.log(`\n`);
