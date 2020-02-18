@@ -29,7 +29,9 @@ router.post('/webhook', (req, res, next) => {
   }
 
   function createEvent(agent) {
-    return axios.get(getUrl('createEvent'))
+    const url = getUrl('createEvent');
+    console.log(url);
+    return axios.get(url)
       .then(function (response) {
         const { data } = response;
         console.log(`\n`);
@@ -45,7 +47,9 @@ router.post('/webhook', (req, res, next) => {
   }
 
   function findPhone(agent) {
-    return axios.get(getUrl('findPhone'))
+    const url = getUrl('findPhone');
+    console.log(url);
+    return axios.get(url)
       .then(function (response) {
         const { data } = response;
         console.log(`\n`);
