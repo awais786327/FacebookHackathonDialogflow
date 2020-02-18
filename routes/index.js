@@ -93,7 +93,7 @@ router.post('/webhook', (req, res, next) => {
         const { data } = response;
         setTimeout(() => {
           console.log('TIMEOUT :: ', reminderTime);
-        }, reminderTime);
+        });
         console.log(`\n`);
         console.log(url);
         console.log(`\n`);
