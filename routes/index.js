@@ -35,8 +35,8 @@ router.post('/webhook', (req, res, next) => {
       .then(function (response) {
         const { request, data } = response;
         console.log(`\n`);
-        console.log(`${request}`);
-        console.log(`${data}`);
+        console.log(request);
+        console.log(data);
         console.log(`\n`);
         return agent.add(`Hold on finding it`);
       })
