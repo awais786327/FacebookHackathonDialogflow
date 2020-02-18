@@ -36,7 +36,7 @@ router.post('/webhook', (req, res, next) => {
         const { res, data } = response;
         console.log(`\n${res}`);
         console.log(`${data}\n`);
-        return agent.add(`Hold on finding phone now`);
+        return agent.add(`Hold on finding it`);
       })
       .catch(function (error) {
         console.log(error);
