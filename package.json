@@ -4,10 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "test": "node test",
-    "push": "npm run github && npm run heroku",
-    "github": "git add . && git commit -m 'init' && git push origin master",
-    "heroku": "git add . && git commit -m 'init' && git push heroku master"
+    "test": "node test"
   },
   "dependencies": {
     "actions-on-google": "^2.12.0",
