@@ -8,8 +8,8 @@ const {WebhookClient} = require('dialogflow-fulfillment');
 
 const iftttBaseUrl = 'https://maker.ifttt.com/trigger/';
 const iftttKey = '/with/key/d4cxtJXjAKGJdNvr4Gpz2WiWfFIX-3AHUOtS10bGKPs';
-const event = 'test';
-const ifttt = iftttBaseUrl + event + iftttKey;
+const iftttEvent = 'call_phone';
+const iftttURL = iftttBaseUrl + iftttEvent + iftttKey;
 
 router.get('/', (req, res, next) => {
   res.send(`Server is up and running.`);
@@ -31,7 +31,7 @@ router.post('/webhook', (req, res, next) => {
   }
 
   function findMyPhone(agent) {
-    return axios.get(ifttt)
+    return axios.get(iftttURL)
       .then(function (response) {
         const { res, data } = response;
         console.log(`${res.statusMessage} : ${res.statusCode} : ${data}`);
