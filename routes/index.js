@@ -50,6 +50,9 @@ router.post('/webhook', (req, res, next) => {
   }
 
   function findPhone(agent) {
+    const time = agent.parameters.time;
+    console.log(`\n`);
+    console.log(time);
     const url = getUrl('findPhone');
     return axios.get(url)
       .then(function (response) {
