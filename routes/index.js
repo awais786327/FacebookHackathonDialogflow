@@ -23,7 +23,8 @@ router.post('/webhook', (req, res, next) => {
   function getUrl(type) {
     const iftttEvents = {
       findPhone: 'call_phone',
-      createEvent: 'google_calendar'
+      createEvent: 'google_calendar',
+      reminder: 'reminder'
     };
     return `https://maker.ifttt.com/trigger/${iftttEvents[type]}/with/key/${iftttKey}`;
   }
@@ -50,10 +51,11 @@ router.post('/webhook', (req, res, next) => {
 
   function findPhone(agent) {
     const url = getUrl('findPhone');
-    console.log(url);
     return axios.get(url)
       .then(function (response) {
         const { data } = response;
+        console.log(`\n`);
+        console.log(url);
         console.log(`\n`);
         console.log(data);
         console.log(`\n`);
@@ -65,9 +67,37 @@ router.post('/webhook', (req, res, next) => {
       });
   }
 
+  function getReminderMessage() {
+    const messages = [
+      `No problem i'll remind`,
+      `Don't worry i'll give a reminder`,
+      `alright i'll do it`,
+    ];
+    return messages[Math.floor(Math.random() * messages.length)];
+  }
+
+  function Reminder(agent) {
+    const url = getUrl('reminder');
+    return axios.get(url)
+      .then(function (response) {
+        const { data } = response;
+        console.log(`\n`);
+        console.log(url);
+        console.log(`\n`);
+        console.log(data);
+        console.log(`\n`);
+        return agent.add(getReminderMessage());
+      })
+      .catch(function (error) {
+        console.log(error);
+        return agent.add(`I'm sorry, can you try again?`);
+      });
+  }
+
   let intentMap = new Map();
   intentMap.set('Find Phone', findPhone);
   intentMap.set('Create Event', createEvent);
+  intentMap.set('Reminder', Reminder);
   agent.handleRequest(intentMap);
 
 });
