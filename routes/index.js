@@ -29,11 +29,13 @@ router.post('/webhook', (req, res, next) => {
   }
 
   function createEvent(agent) {
-    const url = getUrl('createEvent');
-    console.log(url);
+    const description = agent.parameters.description;
+    const url = getUrl('createEvent') + '?value1=' + description;
     return axios.get(url)
       .then(function (response) {
         const { data } = response;
+        console.log(`\n`);
+        console.log(url);
         console.log(`\n`);
         console.log(data);
         console.log(`\n`);
