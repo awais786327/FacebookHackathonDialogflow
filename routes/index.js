@@ -28,7 +28,8 @@ router.post('/webhook', (req, res, next) => {
   function findMyPhone(agent) {
     return axios.get('https://maker.ifttt.com/trigger/test/with/key/d4cxtJXjAKGJdNvr4Gpz2WiWfFIX-3AHUOtS10bGKPs')
       .then(function (response) {
-        console.log(response);
+        const { res, data } = response;
+        console.log(`${res.statusMessage} : ${res.statusCode} : ${data}`);
         return agent.add(`On the way`);
       })
       .catch(function (error) {
