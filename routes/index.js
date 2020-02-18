@@ -81,18 +81,22 @@ router.post('/webhook', (req, res, next) => {
 
     const actualTime = new Date(time).getTime();
     const now = new Date().getTime();
-    const reminderTime = actualTime - now;
 
     if (actualTime < now) {
       return  agent.add(`You can't make a reminder in the past. Please try again!`);
     }
+
+    const reminderTime = new Date(actualTime - now);
 
     const url = getUrl('reminder');
     return axios.get(url)
       .then(function (response) {
         const { data } = response;
         setTimeout(() => {
-          console.log('TIMEOUT :: ', reminderTime);
+          console.log('TIMEOUT :: ', reminderTime.getMilliseconds());
+          console.log('TIMEOUT :: ', reminderTime.getSeconds());
+          console.log('TIMEOUT :: ', reminderTime.getMinutes());
+          console.log('TIMEOUT :: ', reminderTime.getHours());
         });
         console.log(`\n`);
         console.log(url);
