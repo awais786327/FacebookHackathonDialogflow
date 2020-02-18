@@ -6,6 +6,10 @@ const router = express.Router();
 const dialogflow = require('dialogflow');
 const {WebhookClient} = require('dialogflow-fulfillment');
 
+const localStorage = require('local-storage');
+localStorage.set('brotherAppletKey', null);
+localStorage.set('sisterAppletKey', null);
+
 const iftttEvent = 'call_phone';
 const iftttBaseUrl = `https://maker.ifttt.com/trigger/${iftttEvent}/with/key/`;
 const iftttKey = 'd4cxtJXjAKGJdNvr4Gpz2WiWfFIX-3AHUOtS10bGKPs';
@@ -30,14 +34,15 @@ router.post('/webhook', (req, res, next) => {
     agent.add(`I didn't understand`);
   }
 
-  function findMyPhone(agent) {
+  function findPhone(agent) {
+    const { phoneType } = agent.parameters;
     return axios.get(iftttURL)
       .then(function (response) {
         const { data } = response;
         console.log(`\n`);
         console.log(data);
         console.log(`\n`);
-        return agent.add(`Hold on, let's give it a call`);
+        return agent.add(`Hold on, let's give it a call : ${phoneType}`);
       })
       .catch(function (error) {
         console.log(error);
@@ -48,7 +53,7 @@ router.post('/webhook', (req, res, next) => {
   let intentMap = new Map();
   intentMap.set('Default Welcome Intent', welcome);
   intentMap.set('Default Fallback Intent', fallback);
-  intentMap.set('Find My Phone', findMyPhone);
+  intentMap.set('Find Phone', findPhone);
   agent.handleRequest(intentMap);
 
 });
