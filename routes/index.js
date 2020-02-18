@@ -42,7 +42,7 @@ router.post('/webhook', (req, res, next) => {
         console.log(`\n`);
         console.log(data);
         console.log(`\n`);
-        return agent.add(`Hold on, let's give it a call : ${phoneType}`);
+        return agent.add(`Hold on, let's give it a call :: ${phoneType}`);
       })
       .catch(function (error) {
         console.log(error);
