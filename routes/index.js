@@ -134,7 +134,8 @@ router.post('/webhook', (req, res, next) => {
   }
 
   function computerHacks(agent) {
-    const url = getUrl('lockPc');
+    // const type = agent.parameters.type;
+    const url = getUrl('lockPc') + '?value1=lock';
     return axios.get(url)
       .then(function (response) {
         const { data } = response;
