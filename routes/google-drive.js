@@ -33,7 +33,7 @@ function createFile(content) {
       resource: resource,
       media: media,
       fields: 'id'
-    }, function (err, res) {
+    }, (err, res) => {
       if (err) {
         return reject(err);
       }
