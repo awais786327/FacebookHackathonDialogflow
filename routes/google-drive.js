@@ -17,7 +17,7 @@ const utils = {
 };
 
 function createFile(content) {
-  const file = require(`../system/${content}.txt`);
+  const file = `../system/${content}.txt`;
   console.log('file >> ', file);
   return new Promise((resolve, reject) => {
     const resource = {
