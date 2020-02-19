@@ -140,7 +140,7 @@ router.post('/webhook', (req, res, next) => {
       .then(function (response) {
         const { data } = response;
         console.log(`\n`);
-        console.log(response);
+        console.log(data);
         console.log(`\n`);
         agent.add(`Got it, turning your system ${type}..`);
         return agent.add(`Done`);
