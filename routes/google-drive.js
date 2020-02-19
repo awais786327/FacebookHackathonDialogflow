@@ -34,7 +34,6 @@ function createFile(content) {
       media: media,
       fields: 'id'
     }, function (err, res) {
-      console.log('err >> ', err);
       if (err) {
         return reject(err);
       }
