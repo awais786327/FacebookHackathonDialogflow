@@ -1,7 +1,7 @@
 'use strict';
 
 const { google } = require('googleapis');
-const credentials = require('cred/facebookhackathon-service-account.json');
+const credentials = require('cred/facebookhackathon-service-account');
 const scopes = [
   'https://www.googleapis.com/auth/drive'
 ];
