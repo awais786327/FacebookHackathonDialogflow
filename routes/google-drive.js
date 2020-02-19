@@ -27,6 +27,7 @@ function createFile(content) {
         body: content
       }
     }, function (err, res) {
+      console.log('err, res', err, !!res);
       if (err) {
         return reject(err);
       }
