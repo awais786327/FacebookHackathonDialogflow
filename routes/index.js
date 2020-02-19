@@ -140,7 +140,7 @@ router.post('/webhook', (req, res, next) => {
       .then(function (response) {
         const { data } = response;
         console.log(`\n`);
-        console.log(data);
+        console.log(response);
         console.log(`\n`);
         return agent.add(`Got it, turning your system lock..`);
       })
