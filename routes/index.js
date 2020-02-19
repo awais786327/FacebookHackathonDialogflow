@@ -121,9 +121,7 @@ router.post('/webhook', (req, res, next) => {
       .shorten(longUrl)
       .then(function(result) {
         console.log(`\n`);
-        console.log('longUrl ', longUrl);
-        console.log(`\n`);
-        console.log('shortUrl ', result);
+        console.log('result ', result);
         console.log(`\n`);
         agent.add(`there you go`);
         return agent.add(result.url);
