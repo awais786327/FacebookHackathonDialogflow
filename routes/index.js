@@ -83,7 +83,7 @@ router.post('/webhook', (req, res, next) => {
     const now = moment(new Date(), format);
     const ms = then.diff(now);
     const reminderTime = moment.duration(ms).valueOf();
-    const isAfter = moment(then).isAfter(now);
+    const isAfter = moment(now).isAfter(then);
 
     if (!isAfter) {
       return agent.add(`You can't make a reminder in the past. Please try again!`);
