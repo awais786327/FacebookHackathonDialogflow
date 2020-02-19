@@ -126,7 +126,7 @@ router.post('/webhook', (req, res, next) => {
         console.log('shortUrl ', result);
         console.log(`\n`);
         agent.add(`there you go`);
-        return agent.add(result);
+        return agent.add(result.url);
       })
       .catch(function(error) {
         console.log(error);
