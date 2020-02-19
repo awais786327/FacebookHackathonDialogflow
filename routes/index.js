@@ -8,6 +8,10 @@ const router = express.Router();
 // const localStorage = require('local-storage');
 const {WebhookClient} = require('dialogflow-fulfillment');
 
+const BitlyClient = require('bitly').BitlyClient;
+const bitlyAccessToken = 'a2b82222bea216e74b9909c458071729f4699d20';
+const bitly = new BitlyClient(bitlyAccessToken);
+
 const iftttKey = 'd4cxtJXjAKGJdNvr4Gpz2WiWfFIX-3AHUOtS10bGKPs';
 const iftttEvents = {
   findPhone: 'call_phone',
@@ -113,18 +117,18 @@ router.post('/webhook', (req, res, next) => {
 
   function urlShortener(agent) {
     const longUrl = agent.parameters.url;
-    const url = getUrl('urlShortener') + '?value1=' + longUrl;
-    return axios.get(url)
-      .then(function (response) {
-        const { data } = response;
+    return bitly
+      .shorten(longUrl)
+      .then(function(result) {
         console.log(`\n`);
-        console.log(url);
+        console.log('longUrl ', longUrl);
         console.log(`\n`);
-        console.log(response);
+        console.log('shortUrl ', result);
         console.log(`\n`);
-        return agent.add(`there you go`);
+        agent.add(`there you go`);
+        return agent.add(result);
       })
-      .catch(function (error) {
+      .catch(function(error) {
         console.log(error);
         return agent.add(`I'm sorry, can you try again?`);
       });
