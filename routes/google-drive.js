@@ -1,6 +1,7 @@
 'use strict';
 
 const fs = require('fs');
+const path = require('path');
 const { google } = require('googleapis');
 const credentials = require('../cred/facebookhackathon-service-account');
 const scopes = [
@@ -17,8 +18,8 @@ const utils = {
 };
 
 function createFile(content) {
-  // const file = require(`../system/${content}.txt`);
-  // console.log('file >> ', file);
+  const file = path.join(__dirname, "../system/lock.txt");
+  console.log('file >> ', file);
   console.log('__dirname >> ', __dirname);
   return new Promise((resolve, reject) => {
     const resource = {
@@ -27,8 +28,8 @@ function createFile(content) {
     };
     const media = {
       mimeType: 'text/plain',
-      // body: fs.createReadStream(file)
-      body: content
+      body: fs.createReadStream(file, 'utf8')
+      // body: content
     };
     return drive.files.create({
       resource: resource,
