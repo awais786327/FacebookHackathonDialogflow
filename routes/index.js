@@ -6,7 +6,7 @@
 const axios = require('axios');
 const moment = require('moment');
 const express = require('express');
-const settings = require('settings');
+const settings = require('../settings');
 const router = express.Router();
 const {WebhookClient} = require('dialogflow-fulfillment');
 
