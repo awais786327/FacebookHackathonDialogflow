@@ -70,9 +70,9 @@ router.post('/webhook', (req, res, next) => {
 
   function getReminderMessage() {
     const messages = [
-      `No problem i'll remind`,
-      `Don't worry i'll give a reminder`,
-      `Alright i'll do it`,
+      `No problem i'll remind 🔔`,
+      `Don't worry i'll give a reminder 🔔`,
+      `Alright i'll do it 🔔`,
     ];
     return messages[Math.floor(Math.random() * messages.length)];
   }
@@ -91,6 +91,7 @@ router.post('/webhook', (req, res, next) => {
 
     agent.add(getReminderMessage());
 
+    // trigger reminder after internal of time
     return setTimeout(() => {
       const url = getUrl('reminder');
       return axios.get(url)
@@ -101,7 +102,6 @@ router.post('/webhook', (req, res, next) => {
           console.log(`\n`);
           console.log(data);
           console.log(`\n`);
-          return agent.add('Reminder 🔔');
         })
         .catch(function (error) {
           console.log(error);
