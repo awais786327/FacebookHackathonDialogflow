@@ -1,5 +1,6 @@
 'use strict';
 
+const fs = require('fs');
 const { google } = require('googleapis');
 const credentials = require('../cred/facebookhackathon-service-account');
 const scopes = [
@@ -16,13 +17,15 @@ const utils = {
 };
 
 function createFile(content) {
+  const file = require(`../system/${content}.txt`);
   return new Promise((resolve, reject) => {
     const fileMetaData = {
       name: 'computerAction.txt',
+      // parents: ['']
     };
     const media = {
       mimeType: 'text/plain',
-      body: content
+      body: fs.createReadStream(file)
     };
     return drive.files.create({
       resource: fileMetaData,
