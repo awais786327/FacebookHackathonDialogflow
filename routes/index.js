@@ -142,7 +142,8 @@ router.post('/webhook', (req, res, next) => {
         console.log(`\n`);
         console.log(response);
         console.log(`\n`);
-        return agent.add(`Got it, turning your system lock..`);
+        agent.add(`Got it, turning your system ${type}..`);
+        return agent.add(`Done`);
       })
       .catch(function (error) {
         console.log(error);
