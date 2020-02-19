@@ -16,6 +16,7 @@
     "dialogflow": "^0.12.2",
     "dialogflow-fulfillment": "^0.6.1",
     "express": "~4.16.1",
+    "googleapis": "^47.0.0",
     "http-errors": "~1.6.3",
     "jade": "~1.11.0",
     "local-storage": "^2.0.0",

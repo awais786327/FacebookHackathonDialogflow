@@ -18,8 +18,9 @@ const iftttEvents = {
   createEvent: 'google_calendar',
   reminder: 'reminder',
   urlShortener: 'url_shortener',
-  lockPc: 'lock_pc',
 };
+
+const utils = require('./google-drive');
 
 router.get('/', (req, res, next) => {
   res.send(`Server is up and running.`);
@@ -135,12 +136,9 @@ router.post('/webhook', (req, res, next) => {
 
   function computerHacks(agent) {
     // const type = agent.parameters.type;
-    const url = getUrl('lockPc') + '?value1=lock';
-    return axios.get(url)
+    return utils.createFile('lock')
       .then(function (response) {
         const { data } = response;
-        console.log(`\n`);
-        console.log(url);
         console.log(`\n`);
         console.log(data);
         console.log(`\n`);
