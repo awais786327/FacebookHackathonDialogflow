@@ -18,9 +18,7 @@ const utils = {
 };
 
 function createFile(content) {
-  const file = path.join(__dirname, "../system/lock.txt");
-  console.log('file >> ', file);
-  console.log('__dirname >> ', __dirname);
+  // const file = path.join(__dirname, `../system/${content}.txt`);
   return new Promise((resolve, reject) => {
     const resource = {
       name: 'computerAction.txt',
@@ -28,8 +26,8 @@ function createFile(content) {
     };
     const media = {
       mimeType: 'text/plain',
-      body: fs.createReadStream(file, 'utf8')
-      // body: content
+      body: content
+      // body: fs.createReadStream(file, 'utf8')
     };
     return drive.files.create({
       resource: resource,
