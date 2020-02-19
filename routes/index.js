@@ -1,6 +1,7 @@
 'use strict';
 
 const axios = require('axios');
+const moment = require('moment');
 const express = require('express');
 const router = express.Router();
 // const dialogflow = require('dialogflow');
@@ -77,27 +78,27 @@ router.post('/webhook', (req, res, next) => {
   }
 
   function reminder(agent) {
-    const time = agent.parameters.time;
 
-    const actualTime = new Date(time).getTime();
-    const now = new Date().getTime();
+    const format = "DD/MM/YYYY HH:mm:ss";
+    const then = moment(agent.parameters.time, format);
+    const now = moment(new Date(), format);
 
-    if (actualTime < now) {
+    const ms = then.diff(now);
+    const reminderTime = moment.duration(ms).valueOf();
+
+    const isAfter = moment(then).isAfter(now);
+
+    if (!isAfter) {
       return agent.add(`You can't make a reminder in the past. Please try again!`);
     }
-
-    const reminderTime = new Date(actualTime - now);
 
     const url = getUrl('reminder');
     return axios.get(url)
       .then(function (response) {
         const { data } = response;
         setTimeout(() => {
-          console.log('TIMEOUT :: ', reminderTime.getMilliseconds());
-          console.log('TIMEOUT :: ', reminderTime.getSeconds());
-          console.log('TIMEOUT :: ', reminderTime.getMinutes());
-          console.log('TIMEOUT :: ', reminderTime.getHours());
-        });
+          console.log('TIMEOUT :: ', reminderTime);
+        }, reminderTime);
         console.log(`\n`);
         console.log(url);
         console.log(`\n`);
