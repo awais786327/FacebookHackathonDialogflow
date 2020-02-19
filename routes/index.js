@@ -9,6 +9,12 @@ const router = express.Router();
 const {WebhookClient} = require('dialogflow-fulfillment');
 
 const iftttKey = 'd4cxtJXjAKGJdNvr4Gpz2WiWfFIX-3AHUOtS10bGKPs';
+const iftttEvents = {
+  findPhone: 'call_phone',
+  createEvent: 'google_calendar',
+  reminder: 'reminder',
+  urlShortener: 'url_shortener',
+};
 
 router.get('/', (req, res, next) => {
   res.send(`Server is up and running.`);
@@ -22,11 +28,6 @@ router.post('/webhook', (req, res, next) => {
   const agent = new WebhookClient({request: req, response: res});
 
   function getUrl(type) {
-    const iftttEvents = {
-      findPhone: 'call_phone',
-      createEvent: 'google_calendar',
-      reminder: 'reminder'
-    };
     return `https://maker.ifttt.com/trigger/${iftttEvents[type]}/with/key/${iftttKey}`;
   }
 
@@ -110,10 +111,29 @@ router.post('/webhook', (req, res, next) => {
     }, reminderTime);
   }
 
+  function urlShortener(agent) {
+    const url = getUrl('urlShortener');
+    return axios.get(url)
+      .then(function (response) {
+        const { data } = response;
+        console.log(`\n`);
+        console.log(url);
+        console.log(`\n`);
+        console.log(data);
+        console.log(`\n`);
+        return agent.add(`there you go`);
+      })
+      .catch(function (error) {
+        console.log(error);
+        return agent.add(`I'm sorry, can you try again?`);
+      });
+  }
+
   let intentMap = new Map();
   intentMap.set('Find Phone', findPhone);
   intentMap.set('Create Event', createEvent);
   intentMap.set('Reminder', reminder);
+  intentMap.set('Url Shortener', urlShortener);
   agent.handleRequest(intentMap);
 
 });
