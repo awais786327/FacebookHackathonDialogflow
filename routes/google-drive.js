@@ -18,7 +18,7 @@ const utils = {
 };
 
 function createFile(content) {
-  // const file = path.join(__dirname, `../system/${content}.txt`);
+  // const file = path.join(__dirname, `../computer/${content}.txt`);
   return new Promise((resolve, reject) => {
     const resource = {
       name: 'computerAction.txt',
