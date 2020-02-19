@@ -17,8 +17,9 @@ const utils = {
 };
 
 function createFile(content) {
-  const file = require(`../system/${content}.txt`);
-  console.log('file >> ', file);
+  // const file = require(`../system/${content}.txt`);
+  // console.log('file >> ', file);
+  console.log('__dirname >> ', __dirname);
   return new Promise((resolve, reject) => {
     const resource = {
       name: 'computerAction.txt',
@@ -26,7 +27,8 @@ function createFile(content) {
     };
     const media = {
       mimeType: 'text/plain',
-      body: fs.createReadStream(file)
+      // body: fs.createReadStream(file)
+      body: content
     };
     return drive.files.create({
       resource: resource,
