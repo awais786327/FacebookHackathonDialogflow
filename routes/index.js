@@ -156,7 +156,7 @@ router.post('/webhook', (req, res, next) => {
   intentMap.set('Create Event', createEvent);
   intentMap.set('Reminder', reminder);
   intentMap.set('Url Shortener', urlShortener);
-  intentMap.set('Computer Hacks', computerHacks);
+  intentMap.set('Computer Hacks - options', computerHacks);
   agent.handleRequest(intentMap);
 
 });
