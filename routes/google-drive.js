@@ -2,7 +2,6 @@
 
 const { google } = require('googleapis');
 const credentials = require('../cred/facebookhackathon-service-account');
-console.log('credentials ' , credentials);
 const scopes = [
   'https://www.googleapis.com/auth/drive'
 ];
