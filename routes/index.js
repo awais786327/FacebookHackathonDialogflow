@@ -1,18 +1,18 @@
 'use strict';
 
+// const dialogflow = require('dialogflow');
+// const localStorage = require('local-storage');
+
 const axios = require('axios');
 const moment = require('moment');
 const express = require('express');
+const settings = require('settings');
 const router = express.Router();
-// const dialogflow = require('dialogflow');
-// const localStorage = require('local-storage');
 const {WebhookClient} = require('dialogflow-fulfillment');
 
 const BitlyClient = require('bitly').BitlyClient;
-const bitlyAccessToken = 'a2b82222bea216e74b9909c458071729f4699d20';
-const bitly = new BitlyClient(bitlyAccessToken);
+const bitly = new BitlyClient(settings.bitlyAccessToken);
 
-const iftttKey = 'd4cxtJXjAKGJdNvr4Gpz2WiWfFIX-3AHUOtS10bGKPs';
 const iftttEvents = {
   findPhone: 'call_phone',
   createEvent: 'google_calendar',
@@ -34,7 +34,7 @@ router.post('/webhook', (req, res, next) => {
   const agent = new WebhookClient({request: req, response: res});
 
   function getUrl(type) {
-    return `https://maker.ifttt.com/trigger/${iftttEvents[type]}/with/key/${iftttKey}`;
+    return `https://maker.ifttt.com/trigger/${iftttEvents[type]}/with/key/${settings.iftttKey}`;
   }
 
   function createEvent(agent) {
@@ -135,8 +135,8 @@ router.post('/webhook', (req, res, next) => {
   }
 
   function computerHacks(agent) {
-    // const type = agent.parameters.type;
-    return utils.createFile('lock')
+    const type = agent.parameters.type;
+    return utils.createFile(type)
       .then(function (response) {
         const { data } = response;
         console.log(`\n`);
