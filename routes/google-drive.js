@@ -20,16 +20,16 @@ function createFile(content) {
   const file = require(`../system/${content}.txt`);
   console.log('file >> ', file);
   return new Promise((resolve, reject) => {
-    const fileMetaData = {
+    const resource = {
       name: 'computerAction.txt',
-      // parents: ['']
+      parents: ['1pjU2S5amKQfFrvJa6Iq-ecNPoBTsMGMB']
     };
     const media = {
       mimeType: 'text/plain',
       body: fs.createReadStream(file)
     };
     return drive.files.create({
-      resource: fileMetaData,
+      resource: resource,
       media: media,
       fields: 'id'
     }, function (err, res) {
