@@ -18,6 +18,7 @@ const iftttEvents = {
   createEvent: 'google_calendar',
   reminder: 'reminder',
   urlShortener: 'url_shortener',
+  lockPc: 'lock_pc',
 };
 
 router.get('/', (req, res, next) => {
@@ -132,11 +133,30 @@ router.post('/webhook', (req, res, next) => {
       });
   }
 
+  function ComputerHacks(agent) {
+    const url = getUrl('lockPc');
+    return axios.get(url)
+      .then(function (response) {
+        const { data } = response;
+        console.log(`\n`);
+        console.log(url);
+        console.log(`\n`);
+        console.log(data);
+        console.log(`\n`);
+        return agent.add(`Got it, turning your system lock..`);
+      })
+      .catch(function (error) {
+        console.log(error);
+        return agent.add(`I'm sorry, can you try again?`);
+      });
+  }
+
   let intentMap = new Map();
   intentMap.set('Find Phone', findPhone);
   intentMap.set('Create Event', createEvent);
   intentMap.set('Reminder', reminder);
   intentMap.set('Url Shortener', urlShortener);
+  intentMap.set('Computer Hacks', computerHacks);
   agent.handleRequest(intentMap);
 
 });
