@@ -19,7 +19,7 @@ function createFile(content) {
   return new Promise((resolve, reject) => {
     return drive.files.create({
       requestBody: {
-        name: 'Test',
+        name: 'computerAction.txt',
         mimeType: 'text/plain'
       },
       media: {
