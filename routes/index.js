@@ -112,7 +112,7 @@ router.post('/webhook', (req, res, next) => {
   }
 
   function urlShortener(agent) {
-    const longUrl = agent.parameters.description;
+    const longUrl = agent.parameters.url;
     const url = getUrl('urlShortener') + '?value1=' + longUrl;
     return axios.get(url)
       .then(function (response) {
