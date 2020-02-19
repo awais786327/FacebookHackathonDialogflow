@@ -84,29 +84,30 @@ router.post('/webhook', (req, res, next) => {
     const ms = then.diff(now);
     const reminderTime = moment.duration(ms).valueOf();
     const isAfter = moment(then).isAfter(now);
-    console.log('isAfter ', isAfter);
+
     if (!isAfter) {
       return agent.add(`You can't make a reminder in the past. Please try again!`);
     }
 
-    const url = getUrl('reminder');
-    return axios.get(url)
-      .then(function (response) {
-        const { data } = response;
-        setTimeout(() => {
-          console.log('TIMEOUT :: ', reminderTime);
-        }, reminderTime);
-        console.log(`\n`);
-        console.log(url);
-        console.log(`\n`);
-        console.log(data);
-        console.log(`\n`);
-        return agent.add(getReminderMessage());
-      })
-      .catch(function (error) {
-        console.log(error);
-        return agent.add(`I'm sorry, can you try again?`);
-      });
+    agent.add(getReminderMessage());
+
+    setTimeout(() => {
+      const url = getUrl('reminder');
+      return axios.get(url)
+        .then(function (response) {
+          const { data } = response;
+          console.log(`\n`);
+          console.log(url);
+          console.log(`\n`);
+          console.log(data);
+          console.log(`\n`);
+          return agent.add('Reminder 🔔');
+        })
+        .catch(function (error) {
+          console.log(error);
+          return agent.add(`I'm sorry, can you try again?`);
+        });
+    }, reminderTime);
   }
 
   let intentMap = new Map();
