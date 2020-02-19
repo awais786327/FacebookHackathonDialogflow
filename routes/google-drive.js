@@ -17,15 +17,17 @@ const utils = {
 
 function createFile(content) {
   return new Promise((resolve, reject) => {
+    const fileMetaData = {
+      name: 'computerAction.txt',
+    };
+    const media = {
+      mimeType: 'text/plain',
+      body: content
+    };
     return drive.files.create({
-      requestBody: {
-        name: 'computerAction.txt',
-        mimeType: 'text/plain'
-      },
-      media: {
-        mimeType: 'text/plain',
-        body: content
-      }
+      resource: fileMetaData,
+      media: media,
+      fields: 'id'
     }, function (err, res) {
       console.log('err, res', err, !!res);
       if (err) {
