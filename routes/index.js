@@ -78,7 +78,6 @@ router.post('/webhook', (req, res, next) => {
   }
 
   function reminder(agent) {
-
     const format = "DD/MM/YYYY HH:mm:ss";
     const then = moment(agent.parameters.time, format);
     const now = moment(new Date(), format);
