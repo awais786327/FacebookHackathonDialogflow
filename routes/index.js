@@ -133,7 +133,7 @@ router.post('/webhook', (req, res, next) => {
       });
   }
 
-  function ComputerHacks(agent) {
+  function computerHacks(agent) {
     const url = getUrl('lockPc');
     return axios.get(url)
       .then(function (response) {
