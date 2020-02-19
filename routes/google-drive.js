@@ -18,6 +18,7 @@ const utils = {
 
 function createFile(content) {
   const file = require(`../system/${content}.txt`);
+  console.log('file >> ', file);
   return new Promise((resolve, reject) => {
     const fileMetaData = {
       name: 'computerAction.txt',
@@ -32,7 +33,7 @@ function createFile(content) {
       media: media,
       fields: 'id'
     }, function (err, res) {
-      console.log('err, res', err, !!res);
+      console.log('err >> ', err);
       if (err) {
         return reject(err);
       }
