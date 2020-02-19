@@ -91,7 +91,7 @@ router.post('/webhook', (req, res, next) => {
 
     agent.add(getReminderMessage());
 
-    setTimeout(() => {
+    return setTimeout(() => {
       const url = getUrl('reminder');
       return axios.get(url)
         .then(function (response) {
