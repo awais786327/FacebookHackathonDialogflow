@@ -18,6 +18,7 @@ const iftttEvents = {
   createEvent: 'google_calendar',
   reminder: 'reminder',
   urlShortener: 'url_shortener',
+  postOnSlack: 'slack_message',
 };
 
 const utils = require('./google-drive');
@@ -151,12 +152,34 @@ router.post('/webhook', (req, res, next) => {
       });
   }
 
+  function postOnSlack(agent) {
+    const message = agent.parameters.message;
+    console.log(message);
+    const url = getUrl('postOnSlack') + '?value1=' + message;
+    return axios.get(url)
+      .then(function (response) {
+        const { data } = response;
+        console.log(`\n`);
+        console.log(url);
+        console.log(`\n`);
+        console.log(data);
+        console.log(`\n`);
+        agent.add(`Sending..`);
+        return agent.add(`Done`);
+      })
+      .catch(function (error) {
+        console.log(error);
+        return agent.add(`I'm sorry, can you try again?`);
+      });
+  }
+
   let intentMap = new Map();
   intentMap.set('Find Phone', findPhone);
   intentMap.set('Create Event', createEvent);
   intentMap.set('Reminder', reminder);
   intentMap.set('Url Shortener', urlShortener);
   intentMap.set('Computer Hacks - options', computerHacks);
+  intentMap.set('Post on Slack', postOnSlack);
   agent.handleRequest(intentMap);
 
 });
