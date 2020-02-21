@@ -154,7 +154,6 @@ router.post('/webhook', (req, res, next) => {
 
   function postOnSlack(agent) {
     const message = agent.parameters.message;
-    console.log(message);
     const url = getUrl('postOnSlack') + '?value1=' + message;
     return axios.get(url)
       .then(function (response) {
