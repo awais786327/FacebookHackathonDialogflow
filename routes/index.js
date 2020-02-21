@@ -193,7 +193,8 @@ router.post('/webhook', (req, res, next) => {
         if (res && res.length) {
           const prediction = `i think it's `  + res.toString().replace(/,/g, ', ');
           agent.add(guessLanguageMessage());
-          return agent.add(prediction);
+          agent.add(prediction);
+          return agent.add('Do you want to play again ?');
         } else {
           return agent.add(`very hard you know 😂`);
         }
