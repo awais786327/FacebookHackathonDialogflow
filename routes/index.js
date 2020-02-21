@@ -209,7 +209,7 @@ router.post('/webhook', (req, res, next) => {
   intentMap.set('Reminder', reminder);
   intentMap.set('Url Shortener', urlShortener);
   intentMap.set('Computer Hacks - options', computerHacks);
-  intentMap.set('Slack Announcement', slackAnnouncement);
+  intentMap.set('Slack Announcement - write', slackAnnouncement);
   intentMap.set('Guess Languages', guessLanguages);
   agent.handleRequest(intentMap);
 
