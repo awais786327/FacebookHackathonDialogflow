@@ -182,7 +182,7 @@ router.post('/webhook', (req, res, next) => {
       });
   }
 
-  function guessLanguages(agent) {
+  function guessLanguage(agent) {
     const query = agent.parameters.query;
     return languageDetect.guess(query)
       .then(res => {
@@ -205,12 +205,12 @@ router.post('/webhook', (req, res, next) => {
 
   let intentMap = new Map();
   intentMap.set('Find Phone', findPhone);
-  intentMap.set('Create Event', createEvent);
+  intentMap.set('Create Event - write', createEvent);
   intentMap.set('Reminder', reminder);
   intentMap.set('Url Shortener', urlShortener);
   intentMap.set('Computer Hacks - options', computerHacks);
   intentMap.set('Slack Announcement - write', slackAnnouncement);
-  intentMap.set('Guess Languages', guessLanguages);
+  intentMap.set('Guess Language - write', guessLanguage);
   agent.handleRequest(intentMap);
 
 });
