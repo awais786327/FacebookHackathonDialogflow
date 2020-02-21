@@ -21,7 +21,8 @@ const iftttEvents = {
   postOnSlack: 'slack_message',
 };
 
-const utils = require('./google-drive');
+const googleDrive = require('./google-drive');
+const languageDetect = require('./language-detect');
 
 router.get('/', (req, res, next) => {
   res.send(`Server is up and running.`);
@@ -85,6 +86,15 @@ router.post('/webhook', (req, res, next) => {
     return messages[Math.floor(Math.random() * messages.length)];
   }
 
+  function detectLanguageMessage() {
+    const messages = [
+      `well i could be wrong`,
+      `ummm if i am not wrong`,
+      `well i might be wrong`,
+    ];
+    return messages[Math.floor(Math.random() * messages.length)];
+  }
+
   function reminder(agent) {
     const format = "DD/MM/YYYY HH:mm:ss";
     const then = moment(new Date(agent.parameters.time), format);
@@ -137,7 +147,7 @@ router.post('/webhook', (req, res, next) => {
 
   function computerHacks(agent) {
     const type = agent.parameters.type;
-    return utils.createFile(type)
+    return googleDrive.createFile(type)
       .then(function (response) {
         // const { data } = response;
         // console.log(`\n`);
@@ -172,6 +182,27 @@ router.post('/webhook', (req, res, next) => {
       });
   }
 
+  function detectLanguage(agent) {
+    const query = agent.parameters.query;
+    return languageDetect.detect(query)
+      .then(res => {
+        console.log(`\n`);
+        console.log(res);
+        console.log(`\n`);
+        if (res && res.length) {
+          const prediction = `i think it's `  + res.toString().replace(/,/g, ', ');
+          agent.add(detectLanguageMessage());
+          return agent.add(prediction);
+        } else {
+          return agent.add(`i think you forgot to write something, lol :P`);
+        }
+      })
+      .catch(err => {
+        console.log('err ', err);
+        return agent.add(`I'm sorry, can you try again?`);
+      });
+  }
+
   let intentMap = new Map();
   intentMap.set('Find Phone', findPhone);
   intentMap.set('Create Event', createEvent);
@@ -179,6 +210,7 @@ router.post('/webhook', (req, res, next) => {
   intentMap.set('Url Shortener', urlShortener);
   intentMap.set('Computer Hacks - options', computerHacks);
   intentMap.set('Post on Slack', postOnSlack);
+  intentMap.set('Detect Language', detectLanguage);
   agent.handleRequest(intentMap);
 
 });
