@@ -162,7 +162,7 @@ router.post('/webhook', (req, res, next) => {
       });
   }
 
-  function postOnSlack(agent) {
+  function slackAnnouncement(agent) {
     const message = agent.parameters.message;
     const url = getUrl('postOnSlack') + '?value1=' + message;
     return axios.get(url)
@@ -209,7 +209,7 @@ router.post('/webhook', (req, res, next) => {
   intentMap.set('Reminder', reminder);
   intentMap.set('Url Shortener', urlShortener);
   intentMap.set('Computer Hacks - options', computerHacks);
-  intentMap.set('Post on Slack', postOnSlack);
+  intentMap.set('Slack Announcement', slackAnnouncement);
   intentMap.set('Guess Languages', guessLanguages);
   agent.handleRequest(intentMap);
 
