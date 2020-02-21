@@ -4,10 +4,10 @@ const LanguageDetect = require('languagedetect');
 const lang = new LanguageDetect();
 
 const utils = {
-  detect: detect
+  guess: guess
 };
 
-function detect(query) {
+function guess(query) {
   if (typeof query === 'string') {
     return new Promise((resolve, reject) => {
       const probability = lang.detect(query);

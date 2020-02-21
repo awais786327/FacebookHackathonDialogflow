@@ -86,7 +86,7 @@ router.post('/webhook', (req, res, next) => {
     return messages[Math.floor(Math.random() * messages.length)];
   }
 
-  function detectLanguageMessage() {
+  function guessLanguageMessage() {
     const messages = [
       `well i could be wrong`,
       `ummm if i am not wrong`,
@@ -182,16 +182,16 @@ router.post('/webhook', (req, res, next) => {
       });
   }
 
-  function detectLanguage(agent) {
+  function guessLanguages(agent) {
     const query = agent.parameters.query;
-    return languageDetect.detect(query)
+    return languageDetect.guess(query)
       .then(res => {
         console.log(`\n`);
         console.log(res);
         console.log(`\n`);
         if (res && res.length) {
           const prediction = `i think it's `  + res.toString().replace(/,/g, ', ');
-          agent.add(detectLanguageMessage());
+          agent.add(guessLanguageMessage());
           return agent.add(prediction);
         } else {
           return agent.add(`i think you forgot to write something, lol :P`);
@@ -210,7 +210,7 @@ router.post('/webhook', (req, res, next) => {
   intentMap.set('Url Shortener', urlShortener);
   intentMap.set('Computer Hacks - options', computerHacks);
   intentMap.set('Post on Slack', postOnSlack);
-  intentMap.set('Detect Language', detectLanguage);
+  intentMap.set('Guess Languages', guessLanguages);
   agent.handleRequest(intentMap);
 
 });
