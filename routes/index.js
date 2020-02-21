@@ -184,7 +184,7 @@ router.post('/webhook', (req, res, next) => {
 
   function guessLanguage(agent) {
     const query = agent.parameters.query;
-    console.log('guessLanguage query > ', query);
+    console.log('guess Language query >>> ', query);
     return languageDetect.guess(query)
       .then(res => {
         console.log(`\n`);
