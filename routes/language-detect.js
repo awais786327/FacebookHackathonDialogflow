@@ -11,7 +11,7 @@ function guess(query) {
   if (typeof query === 'string') {
     return new Promise((resolve, reject) => {
       const probability = lang.detect(query);
-      const result = language(probability);
+      const result = getLanguage(probability);
       if (!result) {
         return reject(null);
       }
@@ -23,7 +23,7 @@ function guess(query) {
     for (let k = 0; k < query.length; k++) {
       const promise = new Promise((resolve, reject) => {
         const probability = lang.detect(query[k]);
-        const result = language(probability);
+        const result = getLanguage(probability);
         if (!result) {
           return reject(null);
         }
@@ -35,9 +35,9 @@ function guess(query) {
   }
 }
 
-function language(arr) {
+function getLanguage(arr) {
   if (!arr || !(arr && arr.length)) {
-    return [];
+    return null;
   }
 
   let assumption = arr[0][1];

@@ -195,7 +195,7 @@ router.post('/webhook', (req, res, next) => {
           agent.add(guessLanguageMessage());
           return agent.add(prediction);
         } else {
-          return agent.add(`i think you forgot to write something, lol :P`);
+          return agent.add(`very hard you know 😂`);
         }
       })
       .catch(err => {
