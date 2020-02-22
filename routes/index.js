@@ -193,10 +193,10 @@ router.post('/webhook', (req, res, next) => {
         if (res && res.length) {
           const prediction = `i think it's `  + res.toString().replace(/,/g, ', ');
           agent.add(`${guessLanguageMessage(prediction)}`);
-          return agent.add('Do you want to play again ?');
         } else {
-          return agent.add(`very hard you know 😂`);
+          agent.add(`Oops very hard you know 😂 let's play one more time`);
         }
+        return agent.add('Do you want to play again ?');
       })
       .catch(err => {
         console.log('err ', err);
