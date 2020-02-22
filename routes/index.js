@@ -95,6 +95,10 @@ router.post('/webhook', (req, res, next) => {
     return (messages[Math.floor(Math.random() * messages.length)] + '\n' + str);
   }
 
+  function getRandomMessage(messages) {
+    return messages[Math.floor(Math.random() * messages.length)];
+  }
+
   function reminder(agent) {
     const format = "DD/MM/YYYY HH:mm:ss";
     const then = moment(new Date(agent.parameters.time), format);
@@ -217,7 +221,8 @@ router.post('/webhook', (req, res, next) => {
       'name': 'awaiting_option_type',
       'lifespan': 1,
     });
-    agent.add('Tell me which one ?');
+    const messages = ['Tell me which one ?', 'Alright, which one ?', 'Ok which one ?', 'Which one ?'];
+    agent.add(getRandomMessage(messages));
     return agent.add(
       'lock\n' +
       'sleep\n' +
