@@ -8,7 +8,7 @@ const moment = require('moment');
 const express = require('express');
 const settings = require('../settings');
 const router = express.Router();
-const {WebhookClient, Suggestion} = require('dialogflow-fulfillment');
+const {WebhookClient} = require('dialogflow-fulfillment');
 
 const BitlyClient = require('bitly').BitlyClient;
 const bitly = new BitlyClient(settings.bitlyAccessToken);
@@ -217,8 +217,8 @@ router.post('/webhook', (req, res, next) => {
       'name': 'awaiting_option_type',
       'lifespan': 1,
     });
-    agent.add(
-      'Tell me which one ?' +
+    agent.add('Tell me which one ?');
+    return agent.add(
       'lock\n' +
       'sleep\n' +
       'screen off\n' +
@@ -228,7 +228,6 @@ router.post('/webhook', (req, res, next) => {
       'restart\n' +
       'shutdown'
     );
-    return agent.add(new Suggestion(['logout', 'screen off', 'lock']));
   }
 
   let intentMap = new Map();
