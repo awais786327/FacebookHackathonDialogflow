@@ -71,7 +71,7 @@ router.post('/webhook', (req, res, next) => {
         console.log(`\n`);
         agent.add(`Hold on, let's give it a call`);
         agent.add(`Do you want to try others ?`);
-        agent.setFollowupEvent({"name": "awaiting_available_options"});
+        agent.setFollowupEvent({"name": "awaiting_available_options_event"});
       })
       .catch(function (error) {
         console.log(error);
