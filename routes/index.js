@@ -69,7 +69,7 @@ router.post('/webhook', (req, res, next) => {
         console.log(`\n`);
         console.log(data);
         console.log(`\n`);
-        agent.add(`Hold on, let's give it a call`);
+        agent.add(`Hold on, let's give it a call\nRinging..`);
         return agent.add(`Do you want to try others ?`);
       })
       .catch(function (error) {
