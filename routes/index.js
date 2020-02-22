@@ -212,12 +212,31 @@ router.post('/webhook', (req, res, next) => {
     return agent.add('Write comma separated sentences in different languages and see if i am able to guess properly');
   }
 
+  function computerHacksPlayAgain(agent) {
+    agent.context.set({
+      'name': 'awaiting_option_type',
+      'lifespan': 1,
+    });
+    agent.add('Tell me which one ?');
+    return agent.add(
+      'lock\n' +
+      'sleep\n' +
+      'screen off\n' +
+      'mute\n' +
+      'unmute\n' +
+      'logout\n' +
+      'restart\n' +
+      'shutdown'
+    );
+  }
+
   let intentMap = new Map();
   intentMap.set('Find Phone', findPhone);
   intentMap.set('Create Event - write', createEvent);
   intentMap.set('Reminder', reminder);
   intentMap.set('Url Shortener', urlShortener);
   intentMap.set('Computer Hacks - options', computerHacks);
+  intentMap.set('Computer Hacks - Play Again - yes', computerHacksPlayAgain);
   intentMap.set('Slack Announcement - write', slackAnnouncement);
   intentMap.set('Guess Language - write', guessLanguage);
   intentMap.set('Guess Language - Play Again - yes', guessLanguagePlayAgain);
