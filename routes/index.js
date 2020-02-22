@@ -205,15 +205,10 @@ router.post('/webhook', (req, res, next) => {
   }
 
   function guessLanguagePlayAgain(agent) {
-    console.log(`\n`);
-    console.log(JSON.stringify(agent.context, null, 2));
-    console.log(`\n`);
     agent.context.set({
       'name': 'GuessLanguage-followup',
       'lifespan': 1,
     });
-    console.log(JSON.stringify(agent.context, null, 2));
-    console.log(`\n`);
     return agent.add('Write comma separated sentences in different languages and see if i am able to guess properly');
   }
 
