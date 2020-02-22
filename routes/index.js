@@ -86,13 +86,13 @@ router.post('/webhook', (req, res, next) => {
     return messages[Math.floor(Math.random() * messages.length)];
   }
 
-  function guessLanguageMessage() {
+  function guessLanguageMessage(str) {
     const messages = [
       `well i could be wrong`,
       `ummm if i am not wrong`,
       `well i might be wrong`,
     ];
-    return messages[Math.floor(Math.random() * messages.length)];
+    return (messages[Math.floor(Math.random() * messages.length)] + '\n' + str);
   }
 
   function reminder(agent) {
@@ -192,10 +192,7 @@ router.post('/webhook', (req, res, next) => {
         console.log(`\n`);
         if (res && res.length) {
           const prediction = `i think it's `  + res.toString().replace(/,/g, ', ');
-          agent.add(`
-          ${guessLanguageMessage()}
-          ${prediction}
-          `);
+          agent.add(`${guessLanguageMessage(prediction)}`);
           return agent.add('Do you want to play again ?');
         } else {
           return agent.add(`very hard you know 😂`);
