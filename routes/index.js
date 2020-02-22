@@ -70,8 +70,8 @@ router.post('/webhook', (req, res, next) => {
         console.log(data);
         console.log(`\n`);
         agent.add(`Hold on, let's give it a call`);
-        // agent.setFollowupEvent({"name": "awaiting_available_options"});
-        return agent.add(`Do you want to try others ?`);
+        agent.add(`Do you want to try others ?`);
+        agent.setFollowupEvent({"name": "awaiting_available_options"});
       })
       .catch(function (error) {
         console.log(error);
