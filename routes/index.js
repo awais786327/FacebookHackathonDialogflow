@@ -258,6 +258,9 @@ router.post('/webhook', (req, res, next) => {
   }
 
   function searchGithubUserDetails(agent) {
+    const a = agent.context.get('SearchGithub-user-followup');
+    const b = a.user;
+    console.log('userContext ' , b);
     return agent.add(`User details`);
     const userContext = agent.context.get('SearchGithub-user-followup');
     const user = userContext.user;
