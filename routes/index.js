@@ -257,8 +257,34 @@ router.post('/webhook', (req, res, next) => {
       });
   }
 
+  function searchGithubUserDetails(agent) {
+    const user = agent.context.get('SearchGithub-user-followup').user;
+    const url = settings.githubBaseUrl + user;
+    return axios.get(url)
+      .then(function (response) {
+        const {
+          name, bio, location, company, public_repos, public_gists, followers, html_url
+        } = response.data;
+        const profession = `${name} is a ${bio}\n`;
+        const living = `currently living in ${location}\n`;
+        const work = `works at ${company}\n`;
+        const repos = `has ${public_repos} public repo's and ${public_gists} public gist's\n`;
+        const publicFigure = `with ${followers} fan following public figures\n`;
+        const about = '\n' + profession + living + (work ? work : '') + repos + publicFigure + more + '\n';
+        const details = about + '\n'+ `You can find more about ${name} here\n`;
+        const profile = details + '\n' + html_url;
+        agent.add(profile);
+        return agent.add(`Do you want to try this again ?`);
+      })
+      .catch(function (error) {
+        console.log(error);
+        return agent.add(`I'm sorry, can you try again?`);
+      });
+  }
+
   let intentMap = new Map();
   intentMap.set('Search Github - user', searchGithubUser);
+  intentMap.set('Search Github - user - details - yes', searchGithubUserDetails);
   intentMap.set('Find Phone', findPhone);
   intentMap.set('Create Event - write', createEvent);
   intentMap.set('Reminder', reminder);
