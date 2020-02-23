@@ -242,8 +242,7 @@ router.post('/webhook', (req, res, next) => {
     return axios.get(url)
       .then(function (response) {
         const { name, created_at } = response.data;
-        const format = "DD MMM YYYY";
-        const date = moment(new Date(created_at)).format(format);
+        const date = moment(new Date(created_at)).format("DD MMM YYYY");
         console.log(`\n`);
         console.log(url);
         console.log(`\n`);
