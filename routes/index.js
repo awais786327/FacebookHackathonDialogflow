@@ -258,8 +258,9 @@ router.post('/webhook', (req, res, next) => {
   }
 
   function searchGithubUserDetails(agent) {
-    const user = agent.context.get('SearchGithub-user-followup').user;
-    console.log('user ' , user);
+    const userContext = agent.context.get('SearchGithub-user-followup');
+    const user = userContext.user;
+    console.log('userContext ' , userContext);
     const url = settings.githubBaseUrl + user;
     return axios.get(url)
       .then(function (response) {
