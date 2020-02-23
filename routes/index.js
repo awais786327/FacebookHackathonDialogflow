@@ -271,8 +271,8 @@ router.post('/webhook', (req, res, next) => {
         const work = `works at ${company}\n`;
         const repos = `has ${public_repos} public repo's and ${public_gists} public gist's\n`;
         const publicFigure = `with ${followers} fan following public figures\n`;
-        const about = '\n' + profession + living + (work ? work : '') + repos + publicFigure + '\n';
-        const details = about + '\n'+ `You can find more about ${name} here\n`;
+        const about = '\n' + profession + living + (company ? work : '') + repos + publicFigure + '\n';
+        const details = about + '\n'+ `You can learn more about this person here\n`;
         const profile = details + '\n' + html_url;
         console.log('profile ' , profile);
         agent.add(profile);
