@@ -285,9 +285,10 @@ router.post('/webhook', (req, res, next) => {
   }
 
   function findByIpAddress(agent) {
-    const ip = agent.parameters.ip;
+    const ip = agent.parameters.ip.toString();
+    console.log(`IP `, ip);
     const ipConfig = settings.ipInfo;
-    const url = ipConfig.url + '/' + ip.toString() + '?token=' + ipConfig.accessToken;
+    const url = ipConfig.url + '/' + ip + '?token=' + ipConfig.accessToken;
     return axios.get(url)
       .then(function (response) {
         const { city, region, country, loc } = response.data;
