@@ -249,7 +249,7 @@ router.post('/webhook', (req, res, next) => {
         console.log(`\n`);
         console.log(response.data);
         console.log(`\n`);
-        return agent.add(`${name} joined Github on ${date} would you like to know more ?`);
+        return agent.add(`${name} joined Github on ${date}\n\nwould you like to know more ?`);
       })
       .catch(function (error) {
         console.log(error);
