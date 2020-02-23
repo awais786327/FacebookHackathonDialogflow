@@ -236,7 +236,27 @@ router.post('/webhook', (req, res, next) => {
     );
   }
 
+  function searchGithub(agent) {
+    const user = agent.parameters.user;
+    const url = settings.githubBaseUrl + user;
+    return axios.get(url)
+      .then(function (response) {
+        const { name, created_at } = response;
+        const format = "DD MMM YYYY";
+        const date = moment(new Date(created_at), format);
+        console.log(`\n`);
+        console.log(url);
+        console.log(`\n`);
+        return agent.add(`${name} joined Github on ${date} would you like to know more ?`);
+      })
+      .catch(function (error) {
+        console.log(error);
+        return agent.add(`I'm sorry, can you try again?`);
+      });
+  }
+
   let intentMap = new Map();
+  intentMap.set('Search Github', searchGithub);
   intentMap.set('Find Phone', findPhone);
   intentMap.set('Create Event - write', createEvent);
   intentMap.set('Reminder', reminder);
