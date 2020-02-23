@@ -284,6 +284,26 @@ router.post('/webhook', (req, res, next) => {
       });
   }
 
+  function findByIpAddress(agent) {
+    const ip = agent.parameters.ip;
+    const ipConfig = settings.ipInfo;
+    const url = ipConfig.url + '/' + ip + '?token=' + ipConfig.accessToken;
+    return axios.get(url)
+      .then(function (response) {
+        const { city, region, country, loc } = response.data;
+        const result = `${city}, ${region}, ${country} @${loc}`;
+        console.log(`\n`);
+        console.log(result);
+        console.log(`\n`);
+        agent.add(`There you go\n\n${result}`);
+        return agent.add('Do you want another IP Address details ?');
+      })
+      .catch(function (error) {
+        console.log(error);
+        return agent.add(`I could't trace the IP address at the moment please try a little bit later`);
+      });
+  }
+
   let intentMap = new Map();
   intentMap.set('Search Github - user', searchGithubUser);
   intentMap.set('Search Github - user - details - yes', searchGithubUserDetails);
@@ -296,6 +316,7 @@ router.post('/webhook', (req, res, next) => {
   intentMap.set('Slack Announcement - write', slackAnnouncement);
   intentMap.set('Guess Language - write', guessLanguage);
   intentMap.set('Guess Language - Play Again - yes', guessLanguagePlayAgain);
+  intentMap.set('Find by IP Address', findByIpAddress);
   agent.handleRequest(intentMap);
 
 });

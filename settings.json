@@ -1,5 +1,10 @@
 {
 	"bitlyAccessToken": "a2b82222bea216e74b9909c458071729f4699d20",
 	"iftttKey": "d4cxtJXjAKGJdNvr4Gpz2WiWfFIX-3AHUOtS10bGKPs",
-	"githubBaseUrl": "https://api.github.com/users/"
+	"githubBaseUrl": "https://api.github.com/users/",
+	"ipInfo": {
+		"name": "ipInfo.io",
+		"url": "https://ipinfo.io/",
+		"accessToken": "00dc39983497a9"
+	}
 }
