@@ -4,7 +4,7 @@
 	"githubBaseUrl": "https://api.github.com/users/",
 	"ipInfo": {
 		"name": "ipInfo.io",
-		"url": "https://ipinfo.io/",
+		"url": "https://ipinfo.io",
 		"accessToken": "00dc39983497a9"
 	}
 }
