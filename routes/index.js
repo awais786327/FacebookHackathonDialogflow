@@ -273,6 +273,7 @@ router.post('/webhook', (req, res, next) => {
         const about = '\n' + profession + living + (work ? work : '') + repos + publicFigure + more + '\n';
         const details = about + '\n'+ `You can find more about ${name} here\n`;
         const profile = details + '\n' + html_url;
+        console.log('profile ' , profile);
         agent.add(profile);
         return agent.add(`Do you want to try this again ?`);
       })
