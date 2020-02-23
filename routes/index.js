@@ -241,7 +241,7 @@ router.post('/webhook', (req, res, next) => {
     const url = settings.githubBaseUrl + user;
     return axios.get(url)
       .then(function (response) {
-        const { name, created_at } = response;
+        const { name, created_at } = response.data;
         const format = "DD MMM YYYY";
         const date = moment(new Date(created_at), format);
         console.log(`\n`);
