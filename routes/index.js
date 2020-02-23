@@ -236,7 +236,7 @@ router.post('/webhook', (req, res, next) => {
     );
   }
 
-  function searchGithub(agent) {
+  function searchGithubUser(agent) {
     const user = agent.parameters.user;
     const url = settings.githubBaseUrl + user;
     return axios.get(url)
@@ -258,7 +258,7 @@ router.post('/webhook', (req, res, next) => {
   }
 
   let intentMap = new Map();
-  intentMap.set('Search Github', searchGithub);
+  intentMap.set('Search Github - user', searchGithubUser);
   intentMap.set('Find Phone', findPhone);
   intentMap.set('Create Event - write', createEvent);
   intentMap.set('Reminder', reminder);
