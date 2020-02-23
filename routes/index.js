@@ -292,7 +292,7 @@ router.post('/webhook', (req, res, next) => {
     return axios.get(url)
       .then(function (response) {
         const { city, region, country, loc } = response.data;
-        const result = `${city}, ${region}, ${country} @${loc}`;
+        const result = `${city}, ${region}, ${country} latlng@${loc}`;
         console.log(`\n`);
         console.log(result);
         console.log(`\n`);
