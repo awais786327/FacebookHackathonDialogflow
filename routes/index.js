@@ -260,7 +260,6 @@ router.post('/webhook', (req, res, next) => {
   function searchGithubUserDetails(agent) {
     const userContext = agent.context.get('searchgithub-user-followup').parameters;
     const user = userContext.user;
-    console.log('userContext ' , userContext);
     const url = settings.githubBaseUrl + user;
     return axios.get(url)
       .then(function (response) {
@@ -272,7 +271,7 @@ router.post('/webhook', (req, res, next) => {
         const work = `works at ${company}\n`;
         const repos = `has ${public_repos} public repo's and ${public_gists} public gist's\n`;
         const publicFigure = `with ${followers} fan following public figures\n`;
-        const about = '\n' + profession + living + (work ? work : '') + repos + publicFigure + more + '\n';
+        const about = '\n' + profession + living + (work ? work : '') + repos + publicFigure + '\n';
         const details = about + '\n'+ `You can find more about ${name} here\n`;
         const profile = details + '\n' + html_url;
         console.log('profile ' , profile);
