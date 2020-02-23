@@ -243,7 +243,7 @@ router.post('/webhook', (req, res, next) => {
       .then(function (response) {
         const { name, created_at } = response.data;
         const format = "DD MMM YYYY";
-        const date = moment(new Date(created_at), format);
+        const date = moment(new Date(created_at)).format(format);
         console.log(`\n`);
         console.log(url);
         console.log(`\n`);
