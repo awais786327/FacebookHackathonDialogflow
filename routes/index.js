@@ -306,6 +306,14 @@ router.post('/webhook', (req, res, next) => {
       });
   }
 
+  function findByIpAddressYes(agent) {
+    agent.context.set({
+      'name': 'FindbyIPAddress-followup',
+      'lifespan': 1,
+    });
+    return agent.add('Ok then tell me the IP Address please');
+  }
+
   let intentMap = new Map();
   intentMap.set('Search Github - user', searchGithubUser);
   intentMap.set('Search Github - user - details - yes', searchGithubUserDetails);
@@ -319,6 +327,7 @@ router.post('/webhook', (req, res, next) => {
   intentMap.set('Guess Language - write', guessLanguage);
   intentMap.set('Guess Language - Play Again - yes', guessLanguagePlayAgain);
   intentMap.set('Find by IP Address', findByIpAddress);
+  intentMap.set('Find by IP Address - yes', findByIpAddressYes);
   agent.handleRequest(intentMap);
 
 });
