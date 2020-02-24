@@ -291,13 +291,14 @@ router.post('/webhook', (req, res, next) => {
     return axios.get(url)
       .then(function (response) {
         const { city, region, country, loc } = response.data;
-        const result = `${city}, ${region}, ${country} latlng@${loc}`;
+        const result = `${city}, ${region}, ${country}`;
         console.log(`\n`);
         console.log(`IP : `, ip);
         console.log(`\n`);
         console.log(result);
         console.log(`\n`);
-        agent.add(`There you go\n\n${result}`);
+        const maps = `https://www.google.com/maps/@${loc}`;
+        agent.add(`There you go\n\n${result}\n\n${maps}`);
         return agent.add('Do you want to trace another IP Address details ?');
       })
       .catch(function (error) {
