@@ -297,8 +297,9 @@ router.post('/webhook', (req, res, next) => {
         console.log(`\n`);
         console.log(result);
         console.log(`\n`);
-        const maps = `https://www.google.com/maps/@${loc}`;
-        agent.add(`There you go\n\n${result}\n\n${maps}`);
+        const maps1 = `https://www.google.com/maps/@${loc}`;
+        const maps2 = `https://maps.google.com/maps?q=loc:${loc}&z=11`;
+        agent.add(`There you go\n\n${result}\n\n${maps2}`);
         return agent.add('Do you want to trace another IP Address details ?');
       })
       .catch(function (error) {
