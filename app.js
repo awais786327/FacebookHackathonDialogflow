@@ -1,16 +1,16 @@
+// Keep App Alive
+try {
+  const newrelic = require('newrelic');
+  console.log('newrelic ', newrelic);
+} catch (e) {
+  console.log('Could not Alive app due to ', e);
+}
+
 const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-
-// Keep App Alive
-try {
-  const keepAlive = require('newrelic');
-  console.log('keepAlive ', keepAlive);
-} catch (e) {
-  console.log('Could not Alive due to ', e);
-}
 
 const indexRouter = require('./routes/index');
 
