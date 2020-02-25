@@ -320,7 +320,8 @@ router.post('/webhook', (req, res, next) => {
   }
 
   function checkWeather(agent) {
-    let {parameters, session} = agent;
+    let {parameters, session, query} = agent;
+    console.log('query ' , query);
     let payload = {
       query: 'hi',
       session: session.toString().split('/').pop(),
@@ -328,17 +329,12 @@ router.post('/webhook', (req, res, next) => {
     };
     return weatherDetect.check(payload)
       .then(res => {
-        const {queryText, fulfillmentText, intent} = res[0].queryResult;
+        const {queryText, fulfillmentText} = res[0].queryResult;
         const reply = {
           query: queryText,
           response: fulfillmentText,
         };
         console.log(`Reply: `, reply);
-        if (intent) {
-          console.log(`Intent: `, intent.displayName);
-        } else {
-          console.log(`No intent matched.`);
-        }
         return agent.add(reply.response);
       })
       .catch(err => {
