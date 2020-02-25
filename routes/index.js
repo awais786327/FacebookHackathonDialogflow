@@ -320,11 +320,7 @@ router.post('/webhook', (req, res, next) => {
   }
 
   function checkWeather(agent) {
-    agent.context.set({
-      'name': 'CheckWeather-followup',
-      'lifespan': 1,
-    });
-    let {parameters, session, query} = agent;
+    let {session, query} = agent;
     let payload = {
       query: query,
       session: session.toString().split('/').pop(),
@@ -338,6 +334,10 @@ router.post('/webhook', (req, res, next) => {
           response: fulfillmentText,
         };
         console.log(`Reply: `, reply);
+        agent.context.set({
+          'name': 'CheckWeather-followup',
+          'lifespan': 1,
+        });
         return agent.add(reply.response);
       })
       .catch(err => {
