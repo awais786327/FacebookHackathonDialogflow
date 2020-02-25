@@ -1,9 +1,7 @@
-// Keep App Alive
+// Keep App Alive Trick
 try {
-  const newrelic = require('newrelic');
-  console.log('newrelic ', newrelic);
 } catch (e) {
-  console.log('Could not Alive app due to ', e);
+  // console.log('Alive app Failed due to ', e);
 }
 
 const createError = require('http-errors');
