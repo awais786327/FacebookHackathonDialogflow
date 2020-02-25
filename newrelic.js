@@ -11,7 +11,7 @@ exports.config = {
   /**
    * Array of application names.
    */
-  app_name: ['Facebook Hackathon'],
+  app_name: ['Facebook-Hackathon'],
   /**
    * Your New Relic license key.
    */

@@ -5,8 +5,12 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
 // Keep App Alive
-const keepAlive = require('newrelic');
-console.log('keepAlive ', keepAlive);
+try {
+  const keepAlive = require('newrelic');
+  console.log('keepAlive ', keepAlive);
+} catch (e) {
+  console.log('Could not Alive due to ', e);
+}
 
 const indexRouter = require('./routes/index');
 
