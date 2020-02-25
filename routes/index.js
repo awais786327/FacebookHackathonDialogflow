@@ -320,6 +320,10 @@ router.post('/webhook', (req, res, next) => {
   }
 
   function checkWeather(agent) {
+    agent.context.set({
+      'name': 'check_weather_info-followup',
+      'lifespan': 1,
+    });
     let {parameters, session, query} = agent;
     let payload = {
       query: query,
