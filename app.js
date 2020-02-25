@@ -4,6 +4,9 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
+// Keep App Alive
+require('newrelic');
+
 const indexRouter = require('./routes/index');
 
 const app = express();
