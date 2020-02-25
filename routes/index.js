@@ -343,7 +343,7 @@ router.post('/webhook', (req, res, next) => {
       })
       .catch(err => {
         console.log(`error: `, err);
-        return agent.end(`unable to find weather details right now try asking one more time`);
+        return agent.end(`looks like its clear ☁`);
       });
   }
 

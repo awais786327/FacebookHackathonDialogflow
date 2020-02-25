@@ -9,7 +9,7 @@ const utils = {
 function check(payload) {
   return new Promise((resolve, reject) => {
     const config = {
-      keyFilename: '../cred/weatherassistantbot-service-account.json',
+      keyFilename: 'cred/weatherassistantbot-service-account.json',
     };
     const sessionClient = new dialogflow.SessionsClient(config);
     const sessionId = payload.session;
