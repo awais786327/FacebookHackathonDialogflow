@@ -23,6 +23,7 @@ const iftttEvents = {
 
 const googleDrive = require('./google-drive');
 const languageDetect = require('./language-detect');
+const weatherDetect = require('./weather-detect');
 
 router.get('/', (req, res, next) => {
   res.send(`Server is up and running.`);
@@ -34,6 +35,8 @@ router.post('/webhook', (req, res, next) => {
   // console.log('Dialogflow Request body: ' + JSON.stringify(request.body));
 
   const agent = new WebhookClient({request: req, response: res});
+
+  const {locale} = agent;
 
   function getUrl(type) {
     return `https://maker.ifttt.com/trigger/${iftttEvents[type]}/with/key/${settings.iftttKey}`;
@@ -316,6 +319,34 @@ router.post('/webhook', (req, res, next) => {
     return agent.add('Ok then tell me the IP Address please');
   }
 
+  function checkWeather(agent) {
+    let {parameters, session} = agent;
+    let payload = {
+      query: 'hi',
+      session: session.toString().split('/').pop(),
+      languageCode: locale
+    };
+    return weatherDetect.check(payload)
+      .then(res => {
+        const {queryText, fulfillmentText, intent} = res[0].queryResult;
+        const reply = {
+          query: queryText,
+          response: fulfillmentText,
+        };
+        console.log(`Reply: `, reply);
+        if (intent) {
+          console.log(`Intent: `, intent.displayName);
+        } else {
+          console.log(`No intent matched.`);
+        }
+        return agent.add(reply.response);
+      })
+      .catch(err => {
+        console.log(`error: `, err);
+        return agent.end(`unable to find weather details right now try asking one more time`);
+      });
+  }
+
   let intentMap = new Map();
   intentMap.set('Search Github - user', searchGithubUser);
   intentMap.set('Search Github - user - details - yes', searchGithubUserDetails);
@@ -330,6 +361,7 @@ router.post('/webhook', (req, res, next) => {
   intentMap.set('Guess Language - Play Again - yes', guessLanguagePlayAgain);
   intentMap.set('Find by IP Address', findByIpAddress);
   intentMap.set('Find by IP Address - yes', findByIpAddressYes);
+  intentMap.set('Check Weather', checkWeather);
   agent.handleRequest(intentMap);
 
 });
