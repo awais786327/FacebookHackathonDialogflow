@@ -321,9 +321,8 @@ router.post('/webhook', (req, res, next) => {
 
   function checkWeather(agent) {
     let {parameters, session, query} = agent;
-    console.log('query ' , query);
     let payload = {
-      query: 'hi',
+      query: query,
       session: session.toString().split('/').pop(),
       languageCode: locale
     };
