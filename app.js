@@ -5,7 +5,7 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
 // Keep App Alive
-require('newrelic');
+// require('newrelic');
 
 const indexRouter = require('./routes/index');
 
