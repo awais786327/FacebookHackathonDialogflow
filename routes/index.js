@@ -321,7 +321,7 @@ router.post('/webhook', (req, res, next) => {
 
   function checkWeather(agent) {
     agent.context.set({
-      'name': 'check_weather_info-followup',
+      'name': 'CheckWeather-followup',
       'lifespan': 1,
     });
     let {parameters, session, query} = agent;
@@ -360,7 +360,7 @@ router.post('/webhook', (req, res, next) => {
   intentMap.set('Guess Language - Play Again - yes', guessLanguagePlayAgain);
   intentMap.set('Find by IP Address', findByIpAddress);
   intentMap.set('Find by IP Address - yes', findByIpAddressYes);
-  intentMap.set('Check Weather', checkWeather);
+  intentMap.set(('Check Weather' || 'Check Weather - city or country'), checkWeather);
   agent.handleRequest(intentMap);
 
 });
