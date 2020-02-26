@@ -26,7 +26,8 @@ const languageDetect = require('./language-detect');
 const weatherDetect = require('./weather-detect');
 
 router.get('/', (req, res, next) => {
-  res.send(`Server is up and running.`);
+  res.render('index');
+  // res.send(`Server is up and running.`);
 });
 
 router.post('/webhook', (req, res, next) => {
