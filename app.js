@@ -1,9 +1,3 @@
-// Keep App Alive Trick
-try {
-} catch (e) {
-  // console.log('Alive app Failed due to ', e);
-}
-
 const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
