@@ -331,7 +331,7 @@ router.post('/webhook', (req, res, next) => {
         console.log(first3Data);
         console.log(`\n`);
         const time = moment(first3Data[0]['Last Update']).fromNow();
-        let updates = `here's the latest updates\n`;
+        let updates = `here's the latest updates\n\n`;
         first3Data.map(obj => {
           let detail = `${obj['Province/State']} . ${obj['Country/Region']}\n`;
           detail += `Confirmed : ${obj['Confirmed']}\nDeaths : ${obj['Deaths']}\nRecovered : ${obj['Recovered']}`;
@@ -339,7 +339,7 @@ router.post('/webhook', (req, res, next) => {
         });
         updates += `about ${time}.`;
         agent.add(updates);
-        return agent.add(`See more here\n${coronaVirus.getLatestUpdatesUrl()}`);
+        return agent.add(`See more here\n\n${coronaVirus.getLatestUpdatesUrl()}`);
       })
       .catch(error => {
         console.log(error);
