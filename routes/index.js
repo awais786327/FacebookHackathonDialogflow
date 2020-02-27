@@ -334,7 +334,7 @@ router.post('/webhook', (req, res, next) => {
         let updates = `here's the latest updates\n\n`;
         first3Data.map(obj => {
           let detail = `${obj['Province/State']} . ${obj['Country/Region']}\n`;
-          detail += `Confirmed : ${obj['Confirmed']}\nDeaths : ${obj['Deaths']}\nRecovered : ${obj['Recovered']}`;
+          detail += `Confirmed : ${obj['Confirmed']}\nDeaths : ${obj['Deaths']}\nRecovered : ${obj['Recovered']}\n\n`;
           updates += detail
         });
         updates += `about ${time}.`;
