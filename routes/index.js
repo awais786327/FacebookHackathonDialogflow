@@ -327,11 +327,14 @@ router.post('/webhook', (req, res, next) => {
       .then(csvRow => {
         const size = 3;
         const first3Data = csvRow.slice(0, size).map(el => el);
+        console.log(`\n`);
+        console.log(first3Data);
+        console.log(`\n`);
         const time = moment(first3Data[0]['Last Update']).fromNow();
-        let updates = `here's the latest updates`;
+        let updates = `here's the latest updates\n`;
         first3Data.map(obj => {
-          let detail = `${obj['Province/State']} . ${obj['Country/Region']} \n`;
-          detail += `Confirmed : ${obj['Confirmed']}, Deaths : ${obj['Deaths']}, Recovered : ${obj['Recovered']}`;
+          let detail = `${obj['Province/State']} . ${obj['Country/Region']}\n`;
+          detail += `Confirmed : ${obj['Confirmed']}\nDeaths : ${obj['Deaths']}\nRecovered : ${obj['Recovered']}`;
           updates += detail
         });
         updates += `about ${time}.`;
