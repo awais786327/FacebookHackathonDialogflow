@@ -331,7 +331,13 @@ router.post('/webhook', (req, res, next) => {
         console.log(first3Data);
         console.log(`\n`);
         const time = moment(first3Data[0]['Last Update']).fromNow();
+        let takeCareMessages = [
+          `Please take care of yourself and the people around\n\n`,
+          `CDC expects 'community spread' of coronavirus, as top official warns\n\n`,
+          `Coronavirus has been identified as the cause of a disease so take the usual precautions to help prevent the spread of this respiratory virus\n\n`,
+        ];
         let updates = `here's the latest updates\n\n`;
+        updates += getRandomMessage(takeCareMessages);
         first3Data.map(obj => {
           let detail = `${obj['Province/State']} . ${obj['Country/Region']}\n`;
           detail += `Confirmed : ${obj['Confirmed']}\nDeaths : ${obj['Deaths']}\nRecovered : ${obj['Recovered']}\n\n`;
@@ -339,8 +345,23 @@ router.post('/webhook', (req, res, next) => {
         });
         updates += `about ${time}.`;
         agent.add(updates);
+        return agent.add(`Would you like to see more details's ?`);
+      })
+      .catch(error => {
+        console.log(error);
+        agent.add(`See the latest updates here`);
+        return agent.add(`https://systems.jhu.edu/research/public-health/ncov/`);
+      });
+  }
+
+  function coronaVirusUpdatesYes(agent) {
+    return coronaVirus
+      .getLatestUpdates()
+      .then(csvRow => {
         const links = coronaVirus.getLatestUpdatesUrl();
+        console.log(`\n`);
         console.log(links);
+        agent.add(`There you go\n`);
         return agent.add(`See more result's here\n\n${links[0].url}\n\nLearn more here\n\n${links[1].url}`);
       })
       .catch(error => {
@@ -395,6 +416,7 @@ router.post('/webhook', (req, res, next) => {
   intentMap.set('Check Weather - city or country', checkWeather);
   intentMap.set('Check Weather - city or country', checkWeather);
   intentMap.set('Corona Virus Updates', coronaVirusUpdates);
+  intentMap.set('Corona Virus Updates - yes', coronaVirusUpdatesYes);
   agent.handleRequest(intentMap);
 
 });
