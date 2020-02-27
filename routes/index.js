@@ -340,6 +340,7 @@ router.post('/webhook', (req, res, next) => {
         updates += `about ${time}.`;
         agent.add(updates);
         const links = await coronaVirus.getLatestUpdatesUrl();
+        console.log(links);
         return agent.add(`See more result's here\n\n${links[0].url}\n\nLearn more here\n\n${links[1].url}`);
       })
       .catch(error => {

@@ -47,7 +47,6 @@ function getLatestUpdatesUrl() {
   Promise
     .all([url1, url2])
     .then(function(result) {
-      console.log(result);
       return result;
     })
     .catch(function(error) {
