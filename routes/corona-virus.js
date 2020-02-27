@@ -36,26 +36,19 @@ const file = `${yesterday}.csv`;
 const url = `${baseUrl}/${branch}/${directory}/${dailyReports}/${file}`;
 const websiteUrl = `https://systems.jhu.edu/research/public-health/ncov/`;
 
+const links = [];
+
 const utils = {
   getLatestUpdates: getLatestUpdates,
   getLatestUpdatesUrl: getLatestUpdatesUrl
 };
 
 function getLatestUpdatesUrl() {
-  const url1 = bitly.shorten(url);
-  const url2 = bitly.shorten(websiteUrl);
-  Promise
-    .all([url1, url2])
-    .then(function(result) {
-      return result;
-    })
-    .catch(function(error) {
-      console.log(error);
-      return websiteUrl;
-    });
+  return links;
 }
 
 function getLatestUpdates() {
+  updateUrl();
   return axios.get(url)
     .then(function (response) {
       const { data } = response;
@@ -64,6 +57,20 @@ function getLatestUpdates() {
     })
     .catch(function (error) {
       console.log(error);
+    });
+}
+
+function updateUrl() {
+  const url1 = bitly.shorten(url);
+  const url2 = bitly.shorten(websiteUrl);
+  Promise.all([url1, url2])
+    .then(result => {
+      links.push(result[0]);
+      links.push(result[1]);
+    })
+    .catch(function(error) {
+      links.push(url);
+      links.push(websiteUrl);
     });
 }
 
