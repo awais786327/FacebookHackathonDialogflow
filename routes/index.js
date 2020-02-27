@@ -151,7 +151,8 @@ router.post('/webhook', (req, res, next) => {
       })
       .catch(function(error) {
         console.log(error);
-        return agent.add(`I'm sorry, can you try again?`);
+        agent.add(`This is not a valid URL`);
+        return agent.add(`URL must start with https:// followed by URL\ne.g: https://www.google.com`);
       });
   }
 
