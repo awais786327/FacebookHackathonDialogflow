@@ -324,7 +324,7 @@ router.post('/webhook', (req, res, next) => {
   function coronaVirusUpdates(agent) {
     return coronaVirus
       .getLatestUpdates()
-      .then(csvRow => {
+      .then(async csvRow => {
         const size = 3;
         const first3Data = csvRow.slice(0, size).map(el => el);
         console.log(`\n`);
@@ -339,7 +339,8 @@ router.post('/webhook', (req, res, next) => {
         });
         updates += `about ${time}.`;
         agent.add(updates);
-        return agent.add(`See more here\n\n${coronaVirus.getLatestUpdatesUrl()}`);
+        const links = await getLatestUpdatesUrl();
+        return agent.add(`See more result's here\n\n${links[0].url}\n\nLearn more here\n\n${links[1].url}`);
       })
       .catch(error => {
         console.log(error);

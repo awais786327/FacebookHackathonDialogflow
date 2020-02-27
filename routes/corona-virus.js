@@ -4,6 +4,10 @@ const axios = require('axios');
 const moment = require('moment');
 const csv = require('csvtojson');
 
+const settings = require('../settings');
+const BitlyClient = require('bitly').BitlyClient;
+const bitly = new BitlyClient(settings.bitlyAccessToken);
+
 moment.updateLocale('en', {
   relativeTime: {
     future: "in %s",
@@ -30,6 +34,7 @@ const yesterday = moment().subtract(1, 'days').format('MM-DD-YYYY');
 const file = `${yesterday}.csv`;
 
 const url = `${baseUrl}/${branch}/${directory}/${dailyReports}/${file}`;
+const websiteUrl = `https://systems.jhu.edu/research/public-health/ncov/`;
 
 const utils = {
   getLatestUpdates: getLatestUpdates,
@@ -37,8 +42,21 @@ const utils = {
 };
 
 function getLatestUpdatesUrl() {
-  return url;
+  const url1 = bitly.shorten(url);
+  const url2 = bitly.shorten(websiteUrl);
+  Promise
+    .all([url1, url2])
+    .then(function(result) {
+      console.log(result);
+      return result;
+    })
+    .catch(function(error) {
+      console.log(error);
+      return websiteUrl;
+    });
 }
+
+getLatestUpdatesUrl();
 
 function getLatestUpdates() {
   return axios.get(url)
