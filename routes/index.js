@@ -24,6 +24,7 @@ const iftttEvents = {
 const googleDrive = require('./google-drive');
 const languageDetect = require('./language-detect');
 const weatherDetect = require('./weather-detect');
+const coronaVirus = require('./corona-virus');
 
 router.get('/', (req, res, next) => {
   res.render('index');
@@ -320,6 +321,30 @@ router.post('/webhook', (req, res, next) => {
     return agent.add('Ok then tell me the IP Address please');
   }
 
+  function coronaVirusUpdates(agent) {
+    return coronaVirus
+      .getLatestUpdates()
+      .then(csvRow => {
+        const size = 3;
+        const first3Data = csvRow.slice(0, size).map(el => el);
+        const time = moment(first3Data[0]['Last Update']).fromNow();
+        let updates = `here's the latest updates`;
+        first3Data.map(obj => {
+          let detail = `${obj['Province/State']} . ${obj['Country/Region']} \n`;
+          detail += `Confirmed : ${obj['Confirmed']}, Deaths : ${obj['Deaths']}, Recovered : ${obj['Recovered']}`;
+          updates += detail
+        });
+        updates += `about ${time}.`;
+        agent.add(updates);
+        return agent.add(`See more here\n${coronaVirus.getLatestUpdatesUrl()}`);
+      })
+      .catch(error => {
+        console.log(error);
+        agent.add(`See the latest updates here`);
+        return agent.add(`https://systems.jhu.edu/research/public-health/ncov/`);
+      });
+  }
+
   function checkWeather(agent) {
     let {session, query} = agent;
     let payload = {
@@ -363,6 +388,8 @@ router.post('/webhook', (req, res, next) => {
   intentMap.set('Find by IP Address - yes', findByIpAddressYes);
   intentMap.set('Check Weather', checkWeather);
   intentMap.set('Check Weather - city or country', checkWeather);
+  intentMap.set('Check Weather - city or country', checkWeather);
+  intentMap.set('Corona Virus Updates', coronaVirusUpdates);
   agent.handleRequest(intentMap);
 
 });
