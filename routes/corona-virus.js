@@ -56,8 +56,6 @@ function getLatestUpdatesUrl() {
     });
 }
 
-getLatestUpdatesUrl();
-
 function getLatestUpdates() {
   return axios.get(url)
     .then(function (response) {
