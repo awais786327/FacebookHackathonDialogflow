@@ -281,8 +281,7 @@ router.post('/webhook', (req, res, next) => {
         const details = about + '\n'+ `You can learn more about this person here\n`;
         const profile = details + '\n' + html_url;
         console.log('profile ' , profile);
-        agent.add(profile);
-        return agent.add(`Do you want to try this search again ?`);
+        return agent.add(profile);
       })
       .catch(function (error) {
         console.log(error);
