@@ -414,7 +414,6 @@ router.post('/webhook', (req, res, next) => {
   intentMap.set('Find by IP Address - yes', findByIpAddressYes);
   intentMap.set('Check Weather', checkWeather);
   intentMap.set('Check Weather - city or country', checkWeather);
-  intentMap.set('Check Weather - city or country', checkWeather);
   intentMap.set('Corona Virus Updates', coronaVirusUpdates);
   intentMap.set('Corona Virus Updates - yes', coronaVirusUpdatesYes);
   agent.handleRequest(intentMap);
