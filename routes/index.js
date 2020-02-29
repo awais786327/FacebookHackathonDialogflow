@@ -386,10 +386,10 @@ router.post('/webhook', (req, res, next) => {
           response: fulfillmentText,
         };
         console.log(`Reply: `, reply);
-        agent.context.set({
-          'name': 'CheckWeather-followup',
-          'lifespan': 1,
-        });
+        // agent.context.set({
+        //   'name': 'CheckWeather-followup',
+        //   'lifespan': 1,
+        // });
         return agent.add(reply.response);
       })
       .catch(err => {
