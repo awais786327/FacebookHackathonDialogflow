@@ -37,7 +37,8 @@ router.post('/webhook', (req, res, next) => {
   // console.log('Dialogflow Request body : ' + JSON.stringify(req.body));
 
   const request_source = req.body.queryResult.outputContexts;
-  console.log(`\nUser : ${request_source[1].parameters.user}\n`);
+  const request_user = request_source[1].parameters.user;
+  console.log(`\nUser : ${request_user}\n`);
 
 
   const agent = new WebhookClient({request: req, response: res});
@@ -308,7 +309,8 @@ router.post('/webhook', (req, res, next) => {
         console.log(`\n`);
         // const maps = `https://www.google.com/maps/@${loc}`;
         const maps = `https://maps.google.com/maps?q=loc:${loc}&z=11`;
-        agent.add(`There you go\n\n${result}\n\n${maps}`);
+        const user = request_user ? `Ok ${request_user} ` : '';
+        agent.add(`${user}There you go\n\n${result}\n\n${maps}`);
         return agent.add('Do you want to trace another IP Address details ?');
       })
       .catch(function (error) {
