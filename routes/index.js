@@ -33,8 +33,11 @@ router.get('/', (req, res, next) => {
 
 router.post('/webhook', (req, res, next) => {
 
-  console.log('Dialogflow Request headers : ' + JSON.stringify(req.headers));
-  console.log('Dialogflow Request body : ' + JSON.stringify(req.body));
+  // console.log('Dialogflow Request headers : ' + JSON.stringify(req.headers));
+  // console.log('Dialogflow Request body : ' + JSON.stringify(req.body));
+
+  console.log('Request Source : ' + req.body.originalDetectIntentRequest);
+
 
   const agent = new WebhookClient({request: req, response: res});
 
