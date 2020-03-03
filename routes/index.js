@@ -36,8 +36,8 @@ router.post('/webhook', (req, res, next) => {
   // console.log('Dialogflow Request headers : ' + JSON.stringify(req.headers));
   // console.log('Dialogflow Request body : ' + JSON.stringify(req.body));
 
-  const request_source = req.body;
-  console.log('Request Source : ' + JSON.stringify(request_source, null, 2));
+  const request_source = req.body.queryResult.outputContexts;
+  console.log(`\nUser : ${request_source[1].parameters.user}\n`);
 
 
   const agent = new WebhookClient({request: req, response: res});
