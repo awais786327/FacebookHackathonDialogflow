@@ -143,26 +143,22 @@ router.post('/webhook', (req, res, next) => {
     }, reminderTime);
   }
 
-  function shortUrl(agent) {
-    console.log(`longUrl > `, agent.parameters);
-    return agent.add(`ok short url`);
-    /*
-        const longUrl = agent.parameters.url;
-        return bitly
-          .shorten(longUrl)
-          .then(function(result) {
-            console.log(`\n`);
-            console.log('result ', result);
-            console.log(`\n`);
-            agent.add(`there you go`);
-            return agent.add(result.url);
-          })
-          .catch(function(error) {
-            console.log(error);
-            agent.add(`This is not a valid URL`);
-            return agent.add(`URL must start with https:// followed by URL\ne.g: https://www.google.com`);
-          });
-    */
+  function urlShortener(agent) {
+    const longUrl = agent.parameters.url;
+    return bitly
+      .shorten(longUrl)
+      .then(function(result) {
+        console.log(`\n`);
+        console.log('result ', result);
+        console.log(`\n`);
+        agent.add(`there you go`);
+        return agent.add(result.url);
+      })
+      .catch(function(error) {
+        console.log(error);
+        agent.add(`This is not a valid URL`);
+        return agent.add(`URL must start with https:// followed by URL\ne.g: https://www.google.com`);
+      });
   }
 
   function computerHacks(agent) {
@@ -414,7 +410,7 @@ router.post('/webhook', (req, res, next) => {
   intentMap.set('Find Phone', findPhone);
   intentMap.set('Create Event - write', createEvent);
   intentMap.set('Reminder', reminder);
-  intentMap.set('Short Url', shortUrl);
+  intentMap.set('Url Shortener', urlShortener);
   intentMap.set('Computer Hacks - options', computerHacks);
   intentMap.set('Computer Hacks - Play Again - yes', computerHacksPlayAgain);
   intentMap.set('Slack Announcement - write', slackAnnouncement);
