@@ -146,7 +146,7 @@ router.post('/webhook', (req, res, next) => {
   function urlShortener(agent) {
     const longUrl = agent.parameters.url;
     console.log(`longUrl >`, longUrl);
-    return bitly
+    /*return bitly
       .shorten(longUrl)
       .then(function(result) {
         console.log(`\n`);
@@ -159,7 +159,7 @@ router.post('/webhook', (req, res, next) => {
         console.log(error);
         agent.add(`This is not a valid URL`);
         return agent.add(`URL must start with https:// followed by URL\ne.g: https://www.google.com`);
-      });
+      });*/
   }
 
   function computerHacks(agent) {
