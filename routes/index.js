@@ -410,7 +410,7 @@ router.post('/webhook', (req, res, next) => {
   intentMap.set('Find Phone', findPhone);
   intentMap.set('Create Event - write', createEvent);
   intentMap.set('Reminder', reminder);
-  intentMap.set('Url Shortener', urlShortener);
+  intentMap.set('Url Short', urlShortener);
   intentMap.set('Computer Hacks - options', computerHacks);
   intentMap.set('Computer Hacks - Play Again - yes', computerHacksPlayAgain);
   intentMap.set('Slack Announcement - write', slackAnnouncement);
