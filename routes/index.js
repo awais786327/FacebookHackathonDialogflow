@@ -143,7 +143,24 @@ router.post('/webhook', (req, res, next) => {
     }, reminderTime);
   }
 
-  function urlShortener(agent) {
+  function computerHacks(agent) {
+    const type = agent.parameters.type;
+    return googleDrive.createFile(type)
+      .then(function (response) {
+        // const { data } = response;
+        // console.log(`\n`);
+        // console.log(data);
+        // console.log(`\n`);
+        agent.add(`Got it, turning your system ${type}..\n\nDone`);
+        return agent.add(`Do you want to try others ?`);
+      })
+      .catch(function (error) {
+        console.log(error);
+        return agent.add(`I'm sorry, can you try again?`);
+      });
+  }
+
+  function urlShort(agent) {
     const longUrl = agent.parameters.url;
     console.log('longUrl >>> ', longUrl);
 
@@ -160,23 +177,6 @@ router.post('/webhook', (req, res, next) => {
         console.log(error);
         agent.add(`This is not a valid URL`);
         return agent.add(`URL must start with https:// followed by URL\ne.g: https://www.google.com`);
-      });
-  }
-
-  function computerHacks(agent) {
-    const type = agent.parameters.type;
-    return googleDrive.createFile(type)
-      .then(function (response) {
-        // const { data } = response;
-        // console.log(`\n`);
-        // console.log(data);
-        // console.log(`\n`);
-        agent.add(`Got it, turning your system ${type}..\n\nDone`);
-        return agent.add(`Do you want to try others ?`);
-      })
-      .catch(function (error) {
-        console.log(error);
-        return agent.add(`I'm sorry, can you try again?`);
       });
   }
 
@@ -412,7 +412,7 @@ router.post('/webhook', (req, res, next) => {
   intentMap.set('Find Phone', findPhone);
   intentMap.set('Create Event - write', createEvent);
   intentMap.set('Reminder', reminder);
-  intentMap.set('Url Short', urlShortener);
+  intentMap.set('Url Short', urlShort);
   intentMap.set('Computer Hacks - options', computerHacks);
   intentMap.set('Computer Hacks - Play Again - yes', computerHacksPlayAgain);
   intentMap.set('Slack Announcement - write', slackAnnouncement);
