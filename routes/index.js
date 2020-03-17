@@ -144,7 +144,7 @@ router.post('/webhook', (req, res, next) => {
   }
 
   function shortUrl(agent) {
-    console.log(`longUrl > `, agent.parameters);
+    // console.log(`longUrl > `, agent.parameters);
     return agent.add(`ok short url`);
     /*
         const longUrl = agent.parameters.url;
