@@ -145,7 +145,7 @@ router.post('/webhook', (req, res, next) => {
 
   function urlShortener(agent) {
     const longUrl = agent.parameters.url;
-    console.log(`longUrl >`, longUrl);
+    console.log(`longUrl > `, agent.parameters);
     /*return bitly
       .shorten(longUrl)
       .then(function(result) {
